@@ -13,10 +13,6 @@
 # You should have received a copy of the GNU Lesser General Public
 # License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 
-require "time"
-require "json"
-require "bunny"
-
 module Fluent
   class HatoholOutput < BufferedOutput
     Plugin.register_output("hatohol2", self)
@@ -29,6 +25,13 @@ module Fluent
     config_param :host_key, :string, :default => "host"
     config_param :content_format, :string, :default => "%{message}"
     config_param :severity_format, :string, :default => "ERROR"
+
+    def initialize
+      super
+      require "time"
+      require "json"
+      require "bunny"
+    end
 
     def configure(conf)
       super
